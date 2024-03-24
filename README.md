@@ -1,6 +1,6 @@
 Description: This program enhances the macOS terminal interface by displaying an ASCII Apple logo and system hardware statistics. 
 
-Instructions: Ensure the main file is located in your user directory or specify its path during compilation. Navigate to terminal settings -> shell -> startup, and enable 'Run Command'. For the command, type: `printf "\033c" && gcc main.c && ./a.out`. NOTE: I used Glass TTY VT220 while formatting the Apple logo. Using a different font will likely make it look distorted.
+Instructions: Ensure the main file is located in your user directory or specify its path during compilation. Navigate to terminal settings -> shell -> startup, and enable 'Run Command'. For the command, type: `printf "\033c" && gcc main.c && ./a.out`. NOTE: I used Glass TTY VT220 while formatting the Apple logo. Using a different font will likely make it look distorted. I also recommend using a window size of 90x35.
 
 Author: Max Allworth-Miles
 
