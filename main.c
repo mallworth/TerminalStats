@@ -42,38 +42,8 @@ char *execute_system_command(const char *command) {
 
 
 int main() {
-	// Sys info
-    struct utsname unameData;
-    uname(&unameData);
-
-    // CPU info
-    char cpu[50];
-    size_t cpu_len = sizeof(cpu);
-    sysctlbyname("machdep.cpu.brand_string", &cpu, &cpu_len, NULL, 0);
-
-    // OS info
-    int mib[2];
-    size_t len;
-    char *kernel_version;
-    mib[0] = CTL_KERN;
-    mib[1] = KERN_OSRELEASE;
-
-    sysctl(mib, 2, NULL, &len, NULL, 0);
-    kernel_version = (char *)malloc(len * sizeof(char));
-    sysctl(mib, 2, kernel_version, &len, NULL, 0);
-
-    // Shell info
-    FILE *f;
-    char version[50];
-    f = popen("bash --version | head -n 1", "r");
-    fgets(version, sizeof(version), f);
-    char *paren_pos = strchr(version, '(');
-    *paren_pos = '\0';
-    pclose(f);
-
     // Print date in center
 	char *date = execute_system_command("date");
-
     struct winsize w1;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w1);
     int terminal_width1 = w1.ws_col;
@@ -103,6 +73,35 @@ int main() {
 
     printf("%s@%s\n", username, hostname);
 
+	// Sys info
+    struct utsname unameData;
+    uname(&unameData);
+
+    // CPU info
+    char cpu[50];
+    size_t cpu_len = sizeof(cpu);
+    sysctlbyname("machdep.cpu.brand_string", &cpu, &cpu_len, NULL, 0);
+
+    // OS info
+    int mib[2];
+    size_t len;
+    char *kernel_version;
+    mib[0] = CTL_KERN;
+    mib[1] = KERN_OSRELEASE;
+
+    sysctl(mib, 2, NULL, &len, NULL, 0);
+    kernel_version = (char *)malloc(len * sizeof(char));
+    sysctl(mib, 2, kernel_version, &len, NULL, 0);
+
+    // Shell info
+    FILE *f;
+    char version[50];
+    f = popen("bash --version | head -n 1", "r");
+    fgets(version, sizeof(version), f);
+    char *paren_pos = strchr(version, '(');
+    *paren_pos = '\0';
+    pclose(f);
+
     // Memory & RAM
     long pages = sysconf(_SC_PHYS_PAGES);
     long page_size = sysconf(_SC_PAGE_SIZE);
@@ -116,6 +115,12 @@ int main() {
     unsigned long long total_space = buf.f_frsize * buf.f_blocks;
     double mem_gb = total_space/1073741824;
     double mem_round = round(mem_gb * 10) / 10;
+
+    // Battery info
+    char *batt_output = execute_system_command("pmset -g batt");
+    char *percent = strstr(batt_output, "%");
+    int batt;
+    sscanf(percent - 3, "%d", &batt);
 
 	// APPLE
   	printf("\033[1;32m");
@@ -174,7 +179,13 @@ int main() {
 	printf("\033[1;32m");
 
 	printf("\033[1;33m");
-	printf("  .KMMMMMMMMMMMMMMMMMMMMMMMWd.\n");
+	printf("  .KMMMMMMMMMMMMMMMMMMMMMMMWd.");
+    printf("\033[0;37m");
+    printf("                  Battery: ");
+    printf("\033[0m");
+	printf("%d%%\n", batt);
+	printf("\033[1;32m");
+
 	printf("  XKMMMMMMMMMMMMMMMMMMMMMMX.\n");
 	printf("\033[1;31m");
 	printf(" ;MMMMMMMMMMMMMMMMMMMMMMMM:\n");
