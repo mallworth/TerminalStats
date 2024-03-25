@@ -1,6 +1,6 @@
 Description: This program enhances the macOS terminal interface by displaying an ASCII Apple logo and system hardware statistics. 
 
-Instructions: Navigate to Terminal settings (`⌘,`) and drag terminal_profile.terminal into your terminal profiles list. Go to the Shell tab, enable 'Run Command', and type the following command, replacing [path to main.c] with the actual file path to main.c on your machine: `printf "\033c" && gcc [path to main.c] && ./a.out`.
+Instructions: In your TerminalStats directory, type `gcc -o terminal_stats main.c` to compile the program. Then type `sudo mv terminal_stats /usr/local/bin` to move the program so it can be executed from any location in your terminal environment. Navigate to Terminal settings (`⌘,`) and drag terminal_profile.terminal into your terminal profiles list. Go to the Shell tab, enable 'Run Command', and type `printf "\033c" && terminal_profile`. Now the terminal_stats program will be run anytime you open a new terminal window, and can be re-run by typing `terminal_stats`.
 
 Author: Max Allworth-Miles
 
