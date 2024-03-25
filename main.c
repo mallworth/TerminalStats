@@ -9,6 +9,7 @@
 #include <limits.h>
 #include <sys/ioctl.h>
 #include <sys/statvfs.h>
+#include <math.h>
 
 
 char *execute_system_command(const char *command) {
@@ -102,15 +103,19 @@ int main() {
 
     printf("%s@%s\n", username, hostname);
 
-    // System memory
+    // Memory & RAM
     long pages = sysconf(_SC_PHYS_PAGES);
     long page_size = sysconf(_SC_PAGE_SIZE);
-    long total_memory = pages * page_size;
-
-    // Filesystem information
     struct statvfs buf;
     statvfs("/", &buf);
+
+    long total_ram = pages * page_size;
+    double ram_gb = total_ram/1073741824;
+    double ram_round = round(ram_gb * 10) / 10;
+
     unsigned long long total_space = buf.f_frsize * buf.f_blocks;
+    double mem_gb = total_space/1073741824;
+    double mem_round = round(mem_gb * 10) / 10;
 
 	// APPLE
   	printf("\033[1;32m");
@@ -151,21 +156,21 @@ int main() {
     printf("      .;loddo:' loolloddol;.");
 
 	printf("\033[0;37m");
-	printf("     		Memory: ");
+	printf("     		RAM: ");
 	printf("\033[0m");
-	printf("%ld ", total_memory);
+	printf("%.1f ", ram_round);
 	printf("\033[0;37m");
-	printf("bytes\n");
+	printf("GB\n");
 	printf("\033[1;32m");
 
     printf("    cKMMMMMMMMMMNWMMMMMMMMMM0:");
 
 	printf("\033[0;37m");
-	printf("     		Disk Space: ");
+	printf("     		Storage: ");
 	printf("\033[0m");
-	printf("%llu ", total_space);
+	printf("%.1f ", mem_round);
 	printf("\033[0;37m");
-	printf("bytes\n");
+	printf("GB\n");
 	printf("\033[1;32m");
 
 	printf("\033[1;33m");
