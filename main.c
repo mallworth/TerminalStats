@@ -122,33 +122,70 @@ int main() {
     int batt;
     sscanf(percent - 3, "%d", &batt);
 
+    // # of processes running
+    FILE *ps_aux = popen("ps aux", "r");
+    int num_processes = 0;
+    char *temp_buf = (char *)malloc(1000 * sizeof(char));
+    size_t size;
+
+    while (getline(&temp_buf, &size, ps_aux) != -1) {
+        num_processes++;
+    }
+
+    temp_buf = NULL;
+    free(temp_buf);
+    fclose(ps_aux);
+
 	// APPLE
   	printf("\033[1;32m");
     printf("\n\t\t    'c.");
 	printf("\033[0m");
 
-	printf("\033[0;37m");
+	// printf("\033[0;37m");
+	// printf("     			OS: ");
+	// printf("\033[0m");
+	// printf("%s %s\n", unameData.sysname, kernel_version);
+	// free(kernel_version);
+	// printf("\033[1;32m");
+
+    printf("\033[0;37m");
+	printf("     			CPU: ");
+	printf("\033[0m");
+	printf("%s\n", cpu);
+	printf("\033[1;32m");
+
+    printf("\t\t,xNMM.");
+
+    printf("\033[0;37m");
 	printf("     			OS: ");
 	printf("\033[0m");
 	printf("%s %s\n", unameData.sysname, kernel_version);
 	free(kernel_version);
 	printf("\033[1;32m");
 
-    printf("\t\t,xNMM.");
 
-	printf("\033[0;37m");
+	// printf("\033[0;37m");
+	// printf("     			Architecture: ");
+	// printf("\033[0m");
+	// printf("%s\n", unameData.machine);
+	// printf("\033[1;32m");
+
+    printf("\t      .OMMMMo");
+
+	// printf("\033[0;37m");
+	// printf("     			CPU: ");
+	// printf("\033[0m");
+	// printf("%s\n", cpu);
+	// printf("\033[1;32m");
+
+    printf("\033[0;37m");
 	printf("     			Architecture: ");
 	printf("\033[0m");
 	printf("%s\n", unameData.machine);
 	printf("\033[1;32m");
 
-    printf("\t      .OMMMMo");
+   
 
-	printf("\033[0;37m");
-	printf("     			CPU: ");
-	printf("\033[0m");
-	printf("%s\n", cpu);
-	printf("\033[1;32m");
 
     printf("\t      OMMM0");
 
@@ -186,7 +223,13 @@ int main() {
 	printf("%d%%\n", batt);
 	printf("\033[1;32m");
 
-	printf("  XKMMMMMMMMMMMMMMMMMMMMMMX.\n");
+	printf("  XKMMMMMMMMMMMMMMMMMMMMMMX.");
+    printf("\033[0;37m");
+    printf("                    Process Count: ");
+    printf("\033[0m");
+	printf("%d\n", num_processes);
+	printf("\033[1;32m");
+
 	printf("\033[1;31m");
 	printf(" ;MMMMMMMMMMMMMMMMMMMMMMMM:\n");
 	printf(" :MMMMMMMMMMMMMMMMMMMMMMMM:\n");
