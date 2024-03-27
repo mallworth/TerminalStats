@@ -1,6 +1,6 @@
 Description: This program enhances the macOS terminal interface by displaying an ASCII Apple logo and system hardware statistics. 
 
-Instructions: In your TerminalStats directory, type `gcc -o terminal_stats main.c` to compile the program. Then type `sudo mv terminal_stats /usr/local/bin` to move the program so it can be executed from any location in your terminal environment. Navigate to Terminal settings (`⌘,`) and drag terminal_profile.terminal into your terminal profiles list. Go to the Shell tab, enable 'Run Command', and type `printf "\033c" && terminal_stats`. Now the terminal_stats program will be run anytime you open a new terminal window, and can be re-run by typing `terminal_stats`.
+Instructions: In your TerminalStats directory, type `gcc -o terminal_stats main.c` to compile the program. Then type `sudo mv terminal_stats /usr/local/bin` to move the program so it can be executed from any location in your terminal environment. Navigate to Terminal settings (`⌘,`) and drag terminal_profile.terminal into your terminal profiles list. Set this profile to default. Add GLASS_TTY_VT220.ttf to Font Book and change to this font in the Text tab. Go to the Shell tab, enable 'Run Command', and type `printf "\033c" && terminal_stats`. Now the terminal_stats program will be run anytime you open a new terminal window, and can be re-run by typing `terminal_stats`.
 
 Author: Max Allworth-Miles
 
